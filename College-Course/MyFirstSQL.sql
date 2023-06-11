@@ -109,3 +109,28 @@ where u_id=5
 
 ------------------------------
 
+select city from Country
+select distinct city form Country
+
+select * from Country where city = "tehran"
+select * from Country where age >= 21
+select * from Country where age between 21 and 50
+select * from Country where city <> tehran
+
+select * from Country where city LIKE "a%"
+select * from Country where city LIKE "%a"
+select * from Country where city LIKE "%a%"
+select * from Country where city LIKE "_a%"
+select * from Country where city LIKE "a_%_%t"
+select * from Country where city LIKE "a%t"
+select * from Country where city LIKE "[abc]%"
+select * from Country where city NOT LIKE "[abc]%"
+select * from Country where city LIKE "[!abc]%"
+select * from Country where city LIKE "[a-e]___"
+select * from Country where city NOT LIKE "[!abc]%"
+
+select top 30 * from Country
+select top 30 persent * from Country
+
+select * from Country order by age
+
