@@ -134,3 +134,29 @@ select top 30 persent * from Country
 
 select * from Country order by age
 
+------------------------------
+
+select p#, sum(qty) as total_qty from spj group by p#
+
+------------------------------
+
+select last_name from user
+
+UNION -- or -- UNION ALL
+
+select first_name from person
+
+------------------------------
+
+select * into Country_backup from Country
+select age into Country_backup from Country
+select * into Country_backup from Country where city = "tehran"
+
+------------------------------
+
+select * from Country where city="tehran" or city="shiraz"
+select * from Country where city="tehran" and name="ali"
+select * from Country where city IN ("tehran","shiraz") 
+select * from Country where city NOT LIKE "__hr__"
+select * from Country where city Like "[^a-d]___"
+select * from Country where city Like "[!a-d]___"
