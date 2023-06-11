@@ -160,3 +160,44 @@ select * from Country where city IN ("tehran","shiraz")
 select * from Country where city NOT LIKE "__hr__"
 select * from Country where city Like "[^a-d]___"
 select * from Country where city Like "[!a-d]___"
+
+------------------------------
+
+create table persons
+(
+    u_id int not null primary key,
+    firstname varchar(50) not null,
+    lastname varchar(50) not null,
+    address varchar(255) not null,
+    city varchar(30) not null,
+)
+
+create table orders
+(
+    id int not null primary key,
+    u_id int,
+    price int,
+    foreign key(u_id) references persons (u_id)
+)
+
+select persons.first_name, persons.last_name, orders.price 
+from person inner join order on person.u_id = person.u_id
+
+select persons.firstname , persons.lastname , orders.price
+from persons left join orders on persons.u_id=orders.u_id
+
+select persons.firstname , persons.lastname , orders.price
+from persons right join orders on persons.u_id=orders.u_id
+
+select persons.firstname , persons.lastname , orders.price
+from persons full join orders on persons.u_id=orders.u_id
+
+------------------------------
+
+CREATE VIEW test_view AS
+SELECT firstname,lastname,age FROM pishva WHERE age>25
+
+CREATE REPLACE VIEW test_view AS 
+SELECT FirstName,LastName FROM Customer
+
+DROP VIEW test_view
