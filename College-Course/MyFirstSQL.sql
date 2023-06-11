@@ -1,3 +1,6 @@
+-- language: sql
+
+
 create database ali
 
 ------------------------------
