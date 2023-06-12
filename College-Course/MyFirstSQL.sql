@@ -1,203 +1,194 @@
 -- language: sql
 
-create database ali
+CREATE DATABASE ali;
 
 ------------------------------
 
-create table computer 
-(
-    u_id int not null primary key,
-    first_name varchar(50) not null,
-    num varchar(10) not null unique,
-    f_key int,
-    foreign key(f_key) reference randomTable (u_id),
-)
+CREATE TABLE computer (
+    u_id INT NOT NULL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    num VARCHAR(10) NOT NULL UNIQUE,
+    f_key INT,
+    FOREIGN KEY (f_key) REFERENCES randomTable (u_id)
+);
 
 ------------------------------
 
-create table orders
-(
-    id int not null primary key,
-    u_id int not null,
-    constraint fk_order foreign key(u_id) reference randomTable (u_id),
-)
+CREATE TABLE orders (
+    id INT NOT NULL PRIMARY KEY,
+    u_id INT NOT NULL,
+    CONSTRAINT fk_order FOREIGN KEY (u_id) REFERENCES randomTable (u_id)
+);
 
 ------------------------------
 
-create table person
-(
-    id int not null primary key,
-    first_name varchar(50) not null,
-    last_name varchar(50) not null,
-    city varchar(100) not null default "tehran",
-    age int not null check(age >= 18)
-    u_id int not null,
-    foreign key u_id reference randomTable (id),
-)
+CREATE TABLE person (
+    id INT NOT NULL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    city VARCHAR(100) NOT NULL DEFAULT 'tehran',
+    age INT NOT NULL CHECK (age >= 18),
+    u_id INT NOT NULL,
+    FOREIGN KEY (u_id) REFERENCES randomTable (id)
+);
 
 ------------------------------
 
-create table person
-(
-    id int not null primary key,
-    first_name varchar(50) not null,
-    last_name varchar(50) not null,
-    city varchar(100) not null default "tehran",
-    age int not null,
-    u_id int not null,
-    foreign key u_id reference randomTable (id),
-    constraint admin check(age>=18 and id<20)
-)
+CREATE TABLE person (
+    id INT NOT NULL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    city VARCHAR(100) NOT NULL DEFAULT 'tehran',
+    age INT NOT NULL,
+    u_id INT NOT NULL,
+    FOREIGN KEY (u_id) REFERENCES randomTable (id),
+    CONSTRAINT admin CHECK (age >= 18 AND id < 20)
+);
 
 ------------------------------
 
-CREATE TABLE Customer
-(
-    U_ID int NOT NULL PRIMARY KEY,
-    FirstName varchar(50) NOT NULL,
-    LastName varchar(50) NOT NULL,
-    Age int NOT NULL,
-    Address varchar(255) NOT NULL,
-    Country varchar(20) NOT NULL DEFAULT 'Iran',
-    City varchar(20) NOT NULL,
-    CHECK (Age>=18),
-    CONSTRAINT uc_customer UNIQUE (Age,LastName)
-)
+CREATE TABLE Customer (
+    U_ID INT NOT NULL PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Age INT NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    Country VARCHAR(20) NOT NULL DEFAULT 'Iran',
+    City VARCHAR(20) NOT NULL,
+    CHECK (Age >= 18),
+    CONSTRAINT uc_customer UNIQUE (Age, LastName)
+);
 
 --  delete
-ALTER table Customer,
-constraint uc_customer drop,
+ALTER TABLE Customer
+DROP CONSTRAINT uc_customer;
 
 -- add
-ALTER table Customer,
-Add password int,
+ALTER TABLE Customer
+ADD password INT;
 
 -- modify
-ALTER table Customer
-ALTER column age date,
+ALTER TABLE Customer
+ALTER COLUMN age DATE;
 
 ------------------------------
 
-CREATE TABLE Customer
-(
-    U_ID int NOT NULL PRIMARY KEY identity,
-    FirstName varchar(50) NOT NULL,
-    LastName varchar(50) NOT NULL,
-    Age int NOT NULL,
-    Address varchar(255) NOT NULL,
-    Country varchar(20) NOT NULL DEFAULT 'Iran',
-    City varchar(20) NOT NULL,
-    CHECK (Age>=18),
-    CONSTRAINT uc_customer UNIQUE (Age,LastName)
-)
+CREATE TABLE Customer (
+    U_ID INT NOT NULL PRIMARY KEY IDENTITY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Age INT NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    Country VARCHAR(20) NOT NULL DEFAULT 'Iran',
+    City VARCHAR(20) NOT NULL,
+    CHECK (Age >= 18),
+    CONSTRAINT uc_customer UNIQUE (Age, LastName)
+);
 
-Insert into Customer (first_name, last_name, age, Address, Country, city)
-values("ali", "sadeghi", 21, "iran-tehran", "iran", "tehran");
+INSERT INTO Customer (first_name, last_name, age, Address, Country, city)
+VALUES ('ali', 'sadeghi', 21, 'iran-tehran', 'iran', 'tehran');
 
-Insert into Customer values("ali", "sadeghi", 21, "iran-tehran", "iran", "tehran")
-
-------------------------------
-
-select * from Customer
-
-update Customer
-set age = 17, first_name="saba"
-where u_id=5
-
-delete from Customer
-where u_id=5
+INSERT INTO Customer
+VALUES (1, 'ali', 'sadeghi', 21, 'iran-tehran', 'iran', 'tehran');
 
 ------------------------------
 
-select city from Country
-select distinct city form Country
+SELECT * FROM Customer;
 
-select * from Country where city = "tehran"
-select * from Country where age >= 21
-select * from Country where age between 21 and 50
-select * from Country where city <> tehran
+UPDATE Customer
+SET age = 17, first_name = 'saba'
+WHERE u_id = 5;
 
-select * from Country where city LIKE "a%"
-select * from Country where city LIKE "%a"
-select * from Country where city LIKE "%a%"
-select * from Country where city LIKE "_a%"
-select * from Country where city LIKE "a_%_%t"
-select * from Country where city LIKE "a%t"
-select * from Country where city LIKE "[abc]%"
-select * from Country where city NOT LIKE "[abc]%"
-select * from Country where city LIKE "[!abc]%"
-select * from Country where city LIKE "[a-e]___"
-select * from Country where city NOT LIKE "[!abc]%"
-
-select top 30 * from Country
-select top 30 persent * from Country
-
-select * from Country order by age
+DELETE FROM Customer
+WHERE u_id = 5;
 
 ------------------------------
 
-select p#, sum(qty) as total_qty from spj group by p#
+SELECT city FROM Country;
+SELECT DISTINCT city FROM Country;
+
+SELECT * FROM Country WHERE city = 'tehran';
+SELECT * FROM Country WHERE age >= 21;
+SELECT * FROM Country WHERE age BETWEEN 21 AND 50;
+SELECT * FROM Country WHERE city <> 'tehran';
+
+SELECT * FROM Country WHERE city LIKE 'a%';
+SELECT * FROM Country WHERE city LIKE '%a';
+SELECT * FROM Country WHERE city LIKE '%a%';
+SELECT * FROM Country WHERE city LIKE '_a%';
+SELECT * FROM Country WHERE city LIKE 'a_%_%t';
+SELECT * FROM Country WHERE city LIKE 'a%t';
+SELECT * FROM Country WHERE city LIKE '[abc]%';
+SELECT * FROM Country WHERE city NOT LIKE '[abc]%';
+SELECT * FROM Country WHERE city LIKE '[!abc]%';
+SELECT * FROM Country WHERE city LIKE '[a-e]___';
+SELECT * FROM Country WHERE city NOT LIKE '[!abc]%';
+
+SELECT TOP 30 * FROM Country;
+SELECT TOP 30 PERCENT * FROM Country;
+
+SELECT * FROM Country ORDER BY age;
 
 ------------------------------
 
-select last_name from user
-
-UNION -- or -- UNION ALL
-
-select first_name from person
+SELECT p#, SUM(qty) AS total_qty FROM spj GROUP BY p#;
 
 ------------------------------
 
-select * into Country_backup from Country
-select age into Country_backup from Country
-select * into Country_backup from Country where city = "tehran"
+SELECT last_name FROM user
+UNION
+SELECT first_name FROM person;
 
 ------------------------------
 
-select * from Country where city="tehran" or city="shiraz"
-select * from Country where city="tehran" and name="ali"
-select * from Country where city IN ("tehran","shiraz") 
-select * from Country where city NOT LIKE "__hr__"
-select * from Country where city Like "[^a-d]___"
-select * from Country where city Like "[!a-d]___"
+SELECT * INTO Country_backup FROM Country;
+SELECT age INTO Country_backup FROM Country;
+SELECT * INTO Country_backup FROM Country WHERE city = 'tehran';
 
 ------------------------------
 
-create table persons
-(
-    u_id int not null primary key,
-    firstname varchar(50) not null,
-    lastname varchar(50) not null,
-    address varchar(255) not null,
-    city varchar(30) not null,
-)
+SELECT * FROM Country WHERE city = 'tehran' OR city = 'shiraz';
+SELECT * FROM Country WHERE city = 'tehran' AND name = 'ali';
+SELECT * FROM Country WHERE city IN ('tehran', 'shiraz');
+SELECT * FROM Country WHERE city NOT LIKE '__hr__';
+SELECT * FROM Country WHERE city LIKE '[^a-d]___';
+SELECT * FROM Country WHERE city LIKE '[!a-d]___';
 
-create table orders
-(
-    id int not null primary key,
-    u_id int,
-    price int,
-    foreign key(u_id) references persons (u_id)
-)
+------------------------------
 
-select persons.first_name, persons.last_name, orders.price 
-from person inner join order on person.u_id = person.u_id
+CREATE TABLE persons (
+    u_id INT NOT NULL PRIMARY KEY,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    city VARCHAR(30) NOT NULL
+);
 
-select persons.firstname , persons.lastname , orders.price
-from persons left join orders on persons.u_id=orders.u_id
+CREATE TABLE orders (
+    id INT NOT NULL PRIMARY KEY,
+    u_id INT,
+    price INT,
+    FOREIGN KEY (u_id) REFERENCES persons (u_id)
+);
 
-select persons.firstname , persons.lastname , orders.price
-from persons right join orders on persons.u_id=orders.u_id
+SELECT persons.first_name, persons.last_name, orders.price
+FROM persons INNER JOIN orders ON persons.u_id = orders.u_id;
 
-select persons.firstname , persons.lastname , orders.price
-from persons full join orders on persons.u_id=orders.u_id
+SELECT persons.firstname, persons.lastname, orders.price
+FROM persons LEFT JOIN orders ON persons.u_id = orders.u_id;
+
+SELECT persons.firstname, persons.lastname, orders.price
+FROM persons RIGHT JOIN orders ON persons.u_id = orders.u_id;
+
+SELECT persons.firstname, persons.lastname, orders.price
+FROM persons FULL JOIN orders ON persons.u_id = orders.u_id;
 
 ------------------------------
 
 CREATE VIEW test_view AS
-SELECT firstname,lastname,age FROM pishva WHERE age>25
+SELECT firstname, lastname, age FROM pishva WHERE age > 25;
 
-CREATE REPLACE VIEW test_view AS 
-SELECT FirstName,LastName FROM Customer
+CREATE OR REPLACE VIEW test_view AS
+SELECT FirstName, LastName FROM Customer;
 
-DROP VIEW test_view
+DROP VIEW test_view;
